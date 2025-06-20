@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hot Dog Delícia - A Melhor Experiência em Cachorro-Quente</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF5E14;
+            --primary-light: #FF914D;
+            --secondary: #FFD166;
+            --dark: #2E2E2E;
+            --darker: #1A1A1A;
+            --light: #F8F9FA;
+            --lighter: #FFFFFF;
+            --success: #06D6A0;
+            --danger: #EF476F;
+            --gray: #6C757D;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: var(--lighter);
+            padding: 1.5rem 1rem;
+            text-align: center;
+            box-shadow: var(--shadow);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        nav {
+            background-color: var(--darker);
+            padding: 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-weight: 700;
+            color: var(--lighter);
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo i {
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin: 0 10px;
+        }
+        
+        nav ul li a {
+            color: var(--lighter);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        nav ul li a:hover {
+            background-color: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        nav ul li a.active {
+            background-color: var(--primary);
+            box-shadow: 0 4px 8px rgba(255, 94, 20, 0.3);
+        }
+        
+        nav ul li a i {
+            font-size: 0.9rem;
+        }
+        
+        .cart-count {
+            background-color: var(--secondary);
+            color: var(--darker);
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-left: 5px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: calc(100vh - 200px);
+        }
+        
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 3px;
+        }
+        
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .card {
+            background: var(--lighter);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .card-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--secondary);
+            color: var(--darker);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .card:hover .card-img {
+            transform: scale(1.05);
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            color: var(--darker);
+            font-weight: 600;
+        }
+        
+        .card-text {
+            color: var(--gray);
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        
+        .price {
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.3rem;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--primary);
+            color: var(--lighter);
+            padding: 8px 16px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .btn i {
+            font-size: 0.9rem;
+        }
+        
+        .btn:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(255, 94, 20, 0.3);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--lighter);
+        }
+        
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 0.8rem;
+        }
+        
+        .cart {
+            background: var(--lighter);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 30px;
+            position: sticky;
+            top: 100px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .cart h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cart h3 i {
+            color: var(--primary);
+        }
+        
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+            animation: fadeIn 0.4s ease;
+        }
+        
+        .cart-item-info {
+            flex: 1;
+        }
+        
+        .cart-item-name {
+            font-weight: 500;
+            margin-bottom: 3px;
+        }
+        
+        .cart-item-price {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .cart-item-quantity button {
+            background: var(--light);
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .cart-item-quantity button:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .cart-total {
+            font-weight: bold;
+            font-size: 1.3rem;
+            margin-top: 20px;
+            text-align: right;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .btn-checkout {
+            display: block;
+            width: 100%;
+            background: var(--success);
+            margin-top: 20px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .btn-checkout:hover {
+            background: #05C493;
+            box-shadow: 0 5px 10px rgba(6, 214, 160, 0.3);
+        }
+        
+        .empty-cart {
+            text-align: center;
+            color: var(--gray);
+            padding: 30px 20px;
+        }
+        
+        .empty-cart i {
+            font-size: 2rem;
+            color: var(--gray);
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+        
+        /* About Page */
+        .about-content {
+            background: var(--lighter);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-top: 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .about-section {
+            margin-bottom: 30px;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .about-section h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .about-section h3 i {
+            color: var(--secondary);
+        }
+        
+        .about-section p {
+            margin-bottom: 15px;
+            color: var(--dark);
+            line-height: 1.7;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: var(--light);
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .info-card h4 {
+            margin-bottom: 10px;
+            color: var(--darker);
+        }
+        
+        /* Checkout Page */
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        @media (min-width: 992px) {
+            .checkout-container {
+                grid-template-columns: 1fr 350px;
+            }
+        }
+        
+        .checkout-form {
+            background: var(--lighter);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--darker);
+        }
+        
+        .form-group input, 
+        .form-group textarea, 
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background-color: var(--light);
+        }
+        
+        .form-group input:focus, 
+        .form-group textarea:focus, 
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(255, 94, 20, 0.2);
+        }
+        
+        .payment-methods {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .payment-method {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .payment-method input {
+            display: none;
+        }
+        
+        .payment-method label {
+            display: block;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .payment-method label:hover {
+            border-color: var(--primary-light);
+        }
+        
+        .payment-method input:checked + label {
+            border-color: var(--primary);
+            background-color: rgba(255, 94, 20, 0.05);
+        }
+        
+        .payment-method i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .order-summary {
+            background: var(--lighter);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0,0,0,0.05);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .order-items {
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+        
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed rgba(0,0,0,0.1);
+        }
+        
+        /* Loading Animation */
+        .loader {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .loader.active {
+            display: block;
+        }
+        
+        .loader i {
+            font-size: 2rem;
+            color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            animation: fadeIn 0.6s ease;
+        }
+        
+        .success-message.active {
+            display: block;
+        }
+        
+        .success-message i {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+        
+        .success-message h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: var(--darker);
+        }
+        
+        .success-message p {
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 5px;
+            }
+            
+            .payment-methods {
+                flex-direction: column;
+            }
+        }
+        
+        @media (min-width: 992px) {
+            .main-content {
+                display: grid;
+                grid-template-columns: 2fr 1fr;
+                gap: 30px;
+            }
+            
+            .menu {
+                margin-top: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>Hot Dog Delícia</h1>
+            <p>A melhor experiência em cachorro-quente da cidade!</p>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-hotdog"></i>
+                <span>Hot Dog Delícia</span>
+            </div>
+            <ul>
+                <li><a href="#" class="nav-link active" data-page="home"><i class="fas fa-utensils"></i> Cardápio</a></li>
+                <li><a href="#" class="nav-link" data-page="about"><i class="fas fa-store"></i> Sobre Nós</a></li>
+                <li><a href="#" class="nav-link" data-page="checkout"><i class="fas fa-shopping-cart"></i> Pedido <span id="nav-cart-count" class="cart-count">0</span></a></li>
+            </ul>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <!-- Página Inicial (Cardápio) -->
+        <div id="home-page" class="page active">
+            <h2><i class="fas fa-utensils"></i> Nosso Cardápio</h2>
+            <div class="main-content">
+                <div>
+                    <div class="menu" id="menu">
+                        <!-- Itens do menu serão inseridos via JavaScript -->
+                    </div>
+                </div>
+                
+                <div class="cart" id="cart">
+                    <h3><i class="fas fa-shopping-cart"></i> Seu Pedido</h3>
+                    <div id="cart-items">
+                        <div class="empty-cart">
+                            <i class="fas fa-shopping-basket"></i>
+                            <p>Seu carrinho está vazio</p>
+                        </div>
+                    </div>
+                    <div class="cart-total" id="cart-total">Total: R$ 0,00</div>
+                    <button class="btn btn-checkout" id="checkout-btn">
+                        <i class="fas fa-credit-card"></i> Finalizar Compra
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Página Sobre Nós -->
+        <div id="about-page" class="page">
+            <h2><i class="fas fa-store"></i> Sobre Nós</h2>
+            <div class="about-content">
+                <div class="about-section">
+                    <h3><i class="fas fa-history"></i> Nossa História</h3>
+                    <p>Fundada em 2010, a Hot Dog Delícia nasceu da paixão por cachorros-quentes de qualidade. Começamos como uma pequena barraca no centro da cidade e hoje somos referência em lanches rápidos e saborosos.</p>
+                    <p>Nosso objetivo é oferecer uma experiência gastronômica única, combinando ingredientes frescos e receitas criativas para surpreender nossos clientes a cada mordida.</p>
+                </div>
+                
+                <div class="about-section">
+                    <h3><i class="fas fa-star"></i> Nossa Filosofia</h3>
+                    <p>Acreditamos que um bom cachorro-quente vai além da simples combinação de pão e salsicha. Por isso, selecionamos cuidadosamente cada ingrediente, desde o pão fresquinho até os molhos especiais preparados diariamente em nossa cozinha.</p>
+                    <p>Valorizamos a qualidade, o sabor autêntico e a satisfação dos nossos clientes acima de tudo.</p>
+                </div>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h4><i class="fas fa-clock"></i> Horário de Funcionamento</h4>
+                        <p>Segunda a Sexta: 11h às 22h<br>
+                        Sábado e Domingo: 11h às 00h<br>
+                        Feriados: 11h às 23h</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="fas fa-map-marker-alt"></i> Localização</h4>
+                        <p>Rua dos Sabores, 123 - Centro<br>
+                        Cidade Delícia - SP<br>
+                        CEP: 01234-567</p>
+                    </div>
+                    
+                    <div class="info-card">
+                        <h4><i class="fas fa-phone"></i> Contato</h4>
+                        <p>(11) 98765-4321<br>
+                        contato@hotdogdelicia.com.br<br>
+                        @hotdogdelicia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Página de Finalização de Pedido -->
+        <div id="checkout-page" class="page">
+            <h2><i class="fas fa-credit-card"></i> Finalizar Pedido</h2>
+            
+            <div class="checkout-container">
+                <div class="checkout-form">
+                    <form id="order-form">
+                        <div class="form-group">
+                            <label for="name">Nome Completo:</label>
+                            <input type="text" id="name" required placeholder="Digite seu nome completo">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Telefone:</label>
+                            <input type="tel" id="phone" required placeholder="(11) 98765-4321">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Endereço de Entrega:</label>
+                            <textarea id="address" rows="3" required placeholder="Rua, número, complemento, bairro"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Forma de Pagamento:</label>
+                            <div class="payment-methods">
+                                <div class="payment-method">
+                                    <input type="radio" id="payment-money" name="payment" value="dinheiro" required>
+                                    <label for="payment-money">
+                                        <i class="fas fa-money-bill-wave"></i><br>
+                                        Dinheiro
+                                    </label>
+                                </div>
+                                <div class="payment-method">
+                                    <input type="radio" id="payment-card" name="payment" value="cartao">
+                                    <label for="payment-card">
+                                        <i class="fas fa-credit-card"></i><br>
+                                        Cartão
+                                    </label>
+                                </div>
+                                <div class="payment-method">
+                                    <input type="radio" id="payment-pix" name="payment" value="pix">
+                                    <label for="payment-pix">
+                                        <i class="fas fa-qrcode"></i><br>
+                                        PIX
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">Observações:</label>
+                            <textarea id="notes" rows="2" placeholder="Alguma observação sobre seu pedido?"></textarea>
+                        </div>
+                        
+                        <div class="loader" id="form-loader">
+                            <i class="fas fa-spinner"></i>
+                            <p>Processando seu pedido...</p>
+                        </div>
+                        
+                        <div class="success-message" id="success-message">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Pedido Confirmado!</h3>
+                            <p>Obrigado por escolher a Hot Dog Delícia. Seu pedido está sendo preparado com carinho.</p>
+                            <a href="#" class="btn" id="back-to-menu">
+                                <i class="fas fa-utensils"></i> Voltar ao Cardápio
+                            </a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-checkout" id="submit-order">
+                            <i class="fas fa-paper-plane"></i> Confirmar Pedido
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="order-summary">
+                    <h3><i class="fas fa-receipt"></i> Resumo do Pedido</h3>
+                    <div class="order-items" id="checkout-items">
+                        <!-- Itens do pedido serão inseridos aqui -->
+                    </div>
+                    <div class="cart-total" id="checkout-total">Total: R$ 0,00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos produtos
+        const products = [
+            {
+                id: 1,
+                name: "Hot Dog Tradicional",
+                description: "Pão, salsicha, molho de tomate, maionese, mostarda",
+                price: 8.50,
+                image: "https://images.unsplash.com/photo-1619740455993-9e612b1af08a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                badge: "Clássico"
+            },
+            {
+                id: 2,
+                name: "Hot Dog Completo",
+                description: "Pão, 2 salsichas, molho de tomate, maionese, mostarda, milho, ervilha, batata palha",
+                price: 12.00,
+                image: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                badge: "Mais pedido"
+            },
+            {
+                id: 3,
+                name: "Hot Dog Premium",
+                description: "Pão especial, salsicha premium, molhos especiais, bacon, cebola caramelizada",
+                price: 15.90,
+                image: "https://images.unsplash.com/photo-1585238342020-7687932e9a53?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                badge: "Premium"
+            },
+            {
+                id: 4,
+                name: "Hot Dog Vegetariano",
+                description: "Pão integral, salsicha vegetal, molhos veganos, vegetais frescos",
+                price: 14.50,
+                image: "https://images.unsplash.com/photo-1581337204873-ef36aa186caa?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                badge: "Vegano"
+            },
+            {
+                id: 5,
+                name: "Hot Dog Bacon",
+                description: "Pão, salsicha, muito bacon, molho barbecue, cebola roxa",
+                price: 13.75,
+                image: "https://images.unsplash.com/photo-1581337204803-9e6dd2b46fe8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                badge: "Especial"
+            },
+            {
+                id: 6,
+                name: "Hot Dog Duplo",
+                description: "Pão, 2 salsichas, duplo de tudo! Para quem tem fome!",
+                price: 16.50,
+                image: "https://images.unsplash.com/photo-1581337204891-5c9f0a3b7d1e?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                badge: "Faminto"
+            }
+        ];
+
+        // Carrinho de compras
+        let cart = [];
+
+        // Elementos do DOM
+        const menuElement = document.getElementById('menu');
+        const cartItemsElement = document.getElementById('cart-items');
+        const cartTotalElement = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutItemsElement = document.getElementById('checkout-items');
+        const checkoutTotalElement = document.getElementById('checkout-total');
+        const orderForm = document.getElementById('order-form');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+        const navCartCount = document.getElementById('nav-cart-count');
+        const formLoader = document.getElementById('form-loader');
+        const successMessage = document.getElementById('success-message');
+        const submitOrderBtn = document.getElementById('submit-order');
+        const backToMenuBtn = document.getElementById('back-to-menu');
+
+        // Navegação entre páginas - VERSÃO CORRIGIDA
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                
+                // Atualiza navegação ativa
+                navLinks.forEach(navLink => navLink.classList.remove('active'));
+                link.classList.add('active');
+                
+                // Esconde todas as páginas
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Mostra apenas a página selecionada
+                setTimeout(() => {
+                    document.getElementById(`${pageId}-page`).classList.add('active');
+                }, 10);
+                
+                // Atualiza o resumo do pedido na página de checkout
+                if (pageId === 'checkout') {
+                    renderCheckoutItems();
+                }
+                
+                // Rola para o topo suavemente
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Renderiza o menu
+        function renderMenu() {
+            menuElement.innerHTML = '';
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'card';
+                productElement.innerHTML = `
+                    ${product.badge ? `<div class="card-badge">${product.badge}</div>` : ''}
+                    <img src="${product.image}" alt="${product.name}" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">${product.name}</h3>
+                        <p class="card-text">${product.description}</p>
+                        <div class="card-footer">
+                            <div class="price">R$ ${product.price.toFixed(2)}</div>
+                            <button class="btn" onclick="addToCart(${product.id})">
+                                <i class="fas fa-plus"></i> Adicionar
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                menuElement.appendChild(productElement);
+            });
+        }
+
+        // Adiciona item ao carrinho
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            renderCart();
+            updateCartCount();
+            
+            // Mostra feedback visual
+            const btn = event.target.closest('.btn');
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-check"></i> Adicionado!';
+                btn.style.backgroundColor = 'var(--success)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = '<i class="fas fa-plus"></i> Adicionar';
+                    btn.style.backgroundColor = 'var(--primary)';
+                }, 1000);
+            }
+            
+            // Anima o ícone do carrinho na navbar
+            animateCartIcon();
+        }
+
+        // Anima o ícone do carrinho
+        function animateCartIcon() {
+            const cartIcon = document.querySelector('.nav-link[data-page="checkout"] i');
+            cartIcon.style.transform = 'scale(1.3)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+            }, 300);
+        }
+
+        // Remove item do carrinho
+        function removeFromCart(productId) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            
+            if (itemIndex !== -1) {
+                if (cart[itemIndex].quantity > 1) {
+                    cart[itemIndex].quantity -= 1;
+                } else {
+                    cart.splice(itemIndex, 1);
+                }
+            }
+            
+            renderCart();
+            updateCartCount();
+        }
+
+        // Atualiza o contador do carrinho na navbar
+        function updateCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            navCartCount.textContent = count;
+            
+            if (count > 0) {
+                navCartCount.style.display = 'inline-flex';
+            } else {
+                navCartCount.style.display = 'none';
+            }
+        }
+
+        // Renderiza o carrinho
+        function renderCart() {
+            if (cart.length === 0) {
+                cartItemsElement.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Seu carrinho está vazio</p>
+                    </div>
+                `;
+                cartTotalElement.textContent = 'Total: R$ 0,00';
+                checkoutBtn.style.display = 'none';
+                return;
+            }
+            
+            checkoutBtn.style.display = 'block';
+            cartItemsElement.innerHTML = '';
+            
+            cart.forEach(item => {
+                const cartItemElement = document.createElement('div');
+                cartItemElement.className = 'cart-item';
+                cartItemElement.innerHTML = `
+                    <div class="cart-item-info">
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">R$ ${item.price.toFixed(2)}</div>
+                    </div>
+                    <div class="cart-item-quantity">
+                        <button onclick="removeFromCart(${item.id})">-</button>
+                        <span>${item.quantity}</span>
+                        <button onclick="addToCart(${item.id})">+</button>
+                    </div>
+                `;
+                
+                cartItemsElement.appendChild(cartItemElement);
+            });
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            cartTotalElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+        }
+
+        // Renderiza os itens na página de checkout
+        function renderCheckoutItems() {
+            if (cart.length === 0) {
+                checkoutItemsElement.innerHTML = `
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-basket"></i>
+                        <p>Seu carrinho está vazio</p>
+                    </div>
+                `;
+                checkoutTotalElement.textContent = 'Total: R$ 0,00';
+                return;
+            }
+            
+            checkoutItemsElement.innerHTML = '';
+            
+            cart.forEach(item => {
+                const checkoutItemElement = document.createElement('div');
+                checkoutItemElement.className = 'order-item';
+                checkoutItemElement.innerHTML = `
+                    <div>
+                        <strong>${item.name}</strong>
+                        <div>${item.quantity} x R$ ${item.price.toFixed(2)}</div>
+                    </div>
+                    <div>
+                        R$ ${(item.price * item.quantity).toFixed(2)}
+                    </div>
+                `;
+                
+                checkoutItemsElement.appendChild(checkoutItemElement);
+            });
+            
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            checkoutTotalElement.textContent = `Total: R$ ${total.toFixed(2)}`;
+        }
+
+        // Finaliza a compra (botão no carrinho)
+        function checkout() {
+            if (cart.length === 0) {
+                showAlert('Seu carrinho está vazio!', 'error');
+                return;
+            }
+            
+            // Navega para a página de checkout
+            navLinks.forEach(navLink => navLink.classList.remove('active'));
+            document.querySelector('.nav-link[data-page="checkout"]').classList.add('active');
+            
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            setTimeout(() => {
+                document.getElementById('checkout-page').classList.add('active');
+            }, 10);
+            
+            renderCheckoutItems();
+            
+            // Rola para o topo suavemente
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Mostra alerta estilizado
+        function showAlert(message, type = 'success') {
+            const alert = document.createElement('div');
+            alert.className = `alert alert-${type}`;
+            alert.textContent = message;
+            alert.style.position = 'fixed';
+            alert.style.bottom = '20px';
+            alert.style.right = '20px';
+            alert.style.padding = '15px 20px';
+            alert.style.backgroundColor = type === 'error' ? 'var(--danger)' : 'var(--success)';
+            alert.style.color = 'white';
+            alert.style.borderRadius = '8px';
+            alert.style.boxShadow = '0 4px 12px rgba(0,0,0,0.15)';
+            alert.style.zIndex = '1000';
+            alert.style.animation = 'fadeIn 0.3s ease';
+            
+            document.body.appendChild(alert);
+            
+            setTimeout(() => {
+                alert.style.animation = 'fadeOut 0.3s ease';
+                setTimeout(() => {
+                    alert.remove();
+                }, 300);
+            }, 3000);
+        }
+
+        // Processa o formulário de pedido
+        orderForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (cart.length === 0) {
+                showAlert('Seu carrinho está vazio!', 'error');
+                return;
+            }
+            
+            // Mostra loader
+            submitOrderBtn.style.display = 'none';
+            formLoader.classList.add('active');
+            
+            // Simula processamento
+            setTimeout(() => {
+                formLoader.classList.remove('active');
+                successMessage.classList.add('active');
+                
+                const name = document.getElementById('name').value;
+                const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                
+                // Limpa o carrinho e o formulário
+                cart = [];
+                orderForm.reset();
+                renderCart();
+                renderCheckoutItems();
+                updateCartCount();
+                
+                // Volta para a página inicial após 5 segundos
+                setTimeout(() => {
+                    navLinks.forEach(navLink => navLink.classList.remove('active'));
+                    document.querySelector('.nav-link[data-page="home"]').classList.add('active');
+                    
+                    pages.forEach(page => {
+                        page.classList.remove('active');
+                    });
+                    
+                    setTimeout(() => {
+                        document.getElementById('home-page').classList.add('active');
+                        successMessage.classList.remove('active');
+                        submitOrderBtn.style.display = 'block';
+                    }, 10);
+                }, 5000);
+            }, 2000);
+        });
+
+        // Botão para voltar ao menu
+        backToMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            successMessage.classList.remove('active');
+            submitOrderBtn.style.display = 'block';
+            
+            navLinks.forEach(navLink => navLink.classList.remove('active'));
+            document.querySelector('.nav-link[data-page="home"]').classList.add('active');
+            
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            setTimeout(() => {
+                document.getElementById('home-page').classList.add('active');
+            }, 10);
+        });
+
+        // Event listeners
+        checkoutBtn.addEventListener('click', checkout);
+
+        // Inicializa a aplicação
+        renderMenu();
+        updateCartCount();
+
+        // Adiciona animação de fadeIn global
+        document.head.insertAdjacentHTML('beforeend', `
+            <style>
+                @keyframes fadeIn {
+                    from { opacity: 0; transform: translateY(10px); }
+                    to { opacity: 1; transform: translateY(0); }
+                }
+                @keyframes fadeOut {
+                    from { opacity: 1; transform: translateY(0); }
+                    to { opacity: 0; transform: translateY(10px); }
+                }
+            </style>
+        `);
+    </script>
+</body>
+</html>
